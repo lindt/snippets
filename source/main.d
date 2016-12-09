@@ -12,7 +12,7 @@ import std.algorithm;
 import page;
 
 
-class Idiom
+class Snippet
 {
 public:
     this(string mdFile)
@@ -49,7 +49,7 @@ public:
         }
         catch(Exception e)
         {
-            // Usualy happens when the idiom is not yet commited
+            // Usualy happens when the snippet is not yet commited
             return Clock.currTime();
         }
     }
@@ -74,7 +74,7 @@ public:
         }
         catch(Exception e)
         {
-            // Usualy happens when the idiom is not yet commited
+            // Usualy happens when the snippet is not yet commited
             return Clock.currTime();
         }
     }
@@ -107,17 +107,17 @@ private:
 
 void main(string[] args)
 {
-    Idiom[] idioms;
+    Snippet[] snippets;
 
-    // finds all idioms by enumarating Markdown
-    auto mdFiles = filter!`endsWith(a.name,".md")`(dirEntries("idioms",SpanMode.depth));
+    // finds all snippets by enumarating Markdown
+    auto mdFiles = filter!`endsWith(a.name,".md")`(dirEntries("content",SpanMode.depth));
     foreach(md; mdFiles)
-        idioms ~= new Idiom(md);
+        snippets ~= new Snippet(md);
 
     // Sort tips by last change time
     bool sortByLastChange = true;
     if (sortByLastChange)
-        idioms = sort!"a.modTime > b.modTime"(idioms).array;
+        snippets = sort!"a.modTime > b.modTime"(snippets).array;
 
     auto page = new Page("index.html");
 
@@ -137,7 +137,7 @@ void main(string[] args)
                     writeln("<link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
 
                     push("title");
-                    write("d-idioms - Idioms for the D programming language");
+                    write("Snippets for the D programming language");
                     pop;
                 pop;
                 push("body");
@@ -156,44 +156,44 @@ void main(string[] args)
                         push("img", "id=\"logo\" src=\"d-logo.svg\"");
                         pop;
                         push("div", "id=\"title\"");
-                            writeln("Idioms for the D Programming Language");
+                            writeln("Snippets for the D Programming Language");
                         pop();
                     pop;
 
                     push("nav");
-                        foreach(idiom; idioms)
+                        foreach(snippet; snippets)
                         {
                             push("div", `class="item-nav"`);
-                                push("a", "href=\"#" ~ idiom.anchorName() ~ "\"");
-                                    writeln(idiom.title());
+                                push("a", "href=\"#" ~ snippet.anchorName() ~ "\"");
+                                    writeln(snippet.title());
                                 pop;
                                 push("span", `style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"`);
-                                    writeln(" " ~ idiom.lastModifiedString());
+                                    writeln(" " ~ snippet.lastModifiedString());
                                 pop;
                             pop;
                         }
                     pop;
 
                     push("div", "class=\"container\"");
-                        foreach(idiom; idioms)
+                        foreach(snippet; snippets)
                         {
-                            push("a", "name=\"" ~ idiom.anchorName() ~ "\"");
+                            push("a", "name=\"" ~ snippet.anchorName() ~ "\"");
                             pop;
-                            push("div", "class=\"idiom\"");
-                                push("a", "class=\"permalink\" href=\"#" ~ idiom.anchorName() ~ "\"");
+                            push("div", "class=\"snippet\"");
+                                push("a", "class=\"permalink\" href=\"#" ~ snippet.anchorName() ~ "\"");
                                     writeln("Link");
                                 pop;
-                                appendMarkdown(idiom.markdownFile);
+                                appendMarkdown(snippet.markdownFile);
                             pop;
                         }
                     pop;
-                    writeln("<a href=\"https://github.com/p0nce/d-idioms/\"><img style=\"position: absolute; top: 0; right: 0; border: 0;\" src=\"https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67\" alt=\"Fork me on GitHub\" data-canonical-src=\"https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png\"></a>");
+                    writeln("<a href=\"https://github.com/lindt/snippets/\"><img style=\"position: absolute; top: 0; right: 0; border: 0;\" src=\"https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67\" alt=\"Fork me on GitHub\" data-canonical-src=\"https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png\"></a>");
 
 
                      push("footer");
 
                         push("h2");
-                            writeln("Why d-idioms?");
+                            writeln("Why Snippets?");
                         pop;
 
                         push("p");
@@ -207,12 +207,7 @@ void main(string[] args)
                                     `The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>`~
 
                                     `This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).`~
-                                    `Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.<br><br>`
-
-                                    `d-idioms is for: library talk, language explanations, and useful or devious code snippets.<br><br>`
-
-                                    `This website is for the busy developer who doesn't have the time to learn languages in depth.<br><br> <strong>d-idioms expands the subset of D you feel comfortable with, quickly. `~
-                                    `This is a pragmatic page, about a pragmatic language, for pragmatic programmers.</strong><br><br>`);
+                                    `Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.</strong><br><br>`);
                         pop();
 
                         push("h2");
