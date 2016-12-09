@@ -1,6 +1,8 @@
 =================================
-cross product with alias function
+Cross product with alias function
 =================================
+
+Question was how could be a cartesian product function be combined with a variadic template function.
 
 ```d
 import std.algorithm, std.array, std.stdio, std.string, std.typecons;
