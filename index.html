@@ -411,34 +411,51 @@ vim-hybrid theme by w0ng (https://github.com/w0ng/vim-hybrid)
 </a><span style=" color:rgb(158,158,158); font-size: 0.7em; float: right;"> Created Dec 9<span class="sub">th</span> 2016
 </span></div></nav><div class="container"><a name="/cross-product-with-alias"></a><div class="snippet"><a class="permalink" href="#/cross-product-with-alias">Link
 </a><h1 id="cross-product-with-alias-function">cross product with alias function</h1>
-<p>import std.algorithm, std.array, std.stdio, std.string, std.typecons;
-</p>
-<p>// your variadic function which will be called for every crossProduct result<br/>auto magicVariadic(T...)(T t) {<br/>    // do whatever you want you do here;<br/>    string res = "%s item(s):".format(t.length);
-</p>
-<pre class="prettyprint"><code>foreach (item; t) {
-    res ~= " %s (%s)".format(item, typeid(item));  
+<pre class="prettyprint"><code>import std.algorithm, std.array, std.stdio, std.string, std.typecons;
+
+// your variadic function which will be called for every crossProduct result
+auto magicVariadic(T...)(T t) {
+    // do whatever you want you do here;
+    string res = "%s item(s):".format(t.length);
+
+    foreach (item; t) {
+        res ~= " %s (%s)".format(item, typeid(item));  
+    }
+    return res;
 }
-return res;
-</code></pre><p>}
-</p>
-<p>unittest {<br/>    // sure a test ;)<br/>    assert(magicVariadic(1) == "1 item(s): 1 (int)");<br/>}
-</p>
-<p>// just in case you do not want to use Tuples straight away<br/>auto magic(T)(T t) if (isTuple!T) {<br/>    return t.expand.magicVariadic();   <br/>}
-</p>
-<p>// first template argument will now be the function you provide<br/>auto crossProduct(alias T, U...)(U u) {<br/>    return cartesianProduct(u).map!T;<br/>}
-</p>
-<p>void main() {<br/>    // your inputs<br/>    int[] as = [1, 2, 3, 4];<br/>    string[] bs = ["foo", "bar"];<br/>    float[] cs = [3.14, 23.42];
-</p>
-<pre class="prettyprint"><code>auto result = cartesianProduct(as, bs, cs);
-// type of result is known at compile time
-pragma(msg, typeof(result.array)); // .array will allocate; so better avoid it
-</code></pre><pre class="prettyprint"><code>auto mappedResult = crossProduct!magic(as, bs, cs);
-</code></pre><pre class="prettyprint"><code>stdout.writefln("cross product: %s", mappedResult);
-</code></pre><p>}
-</p>
-</div></div><a href="https://github.com/lindt/snippets/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+unittest {
+    // sure a test ;)
+    assert(magicVariadic(1) == "1 item(s): 1 (int)");
+}
+
+// just in case you do not want to use Tuples straight away
+auto magic(T)(T t) if (isTuple!T) {
+    return t.expand.magicVariadic();   
+}
+
+// first template argument will now be the function you provide
+auto crossProduct(alias T, U...)(U u) {
+    return cartesianProduct(u).map!T;
+}
+
+void main() {
+    // your inputs
+    int[] as = [1, 2, 3, 4];
+    string[] bs = ["foo", "bar"];
+    float[] cs = [3.14, 23.42];
+
+    auto result = cartesianProduct(as, bs, cs);
+    // type of result is known at compile time
+    pragma(msg, typeof(result.array)); // .array will allocate; so better avoid it
+
+    auto mappedResult = crossProduct!magic(as, bs, cs);
+
+    stdout.writefln("cross product: %s", mappedResult);
+}
+</code></pre></div></div><a href="https://github.com/lindt/snippets/"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 <footer><h2>Why Snippets?
-</h2><p>D is often praised for its unbounded power. But power needs availability.<br><br> You may hear about every feature a language has to offer, for example after going through the reference book.<br><br>That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>When I discovered D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It all felt glorious and familiar.<br><br>The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.</strong><br><br>
+</h2><p>D is often praised for its unbounded power. Here is a place to store some interesting snippets about it.<br><br>
 </p><h2>About
 </h2><p>Snippets from the <a href="https://github.com/d-muc/">Munich D Programmers</a>.
 </p></footer></body></html>

@@ -2,6 +2,7 @@
 cross product with alias function
 =================================
 
+```d
 import std.algorithm, std.array, std.stdio, std.string, std.typecons;
 
 // your variadic function which will be called for every crossProduct result
@@ -44,3 +45,4 @@ void main() {
 
     stdout.writefln("cross product: %s", mappedResult);
 }
+```

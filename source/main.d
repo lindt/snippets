@@ -197,17 +197,7 @@ void main(string[] args)
                         pop;
 
                         push("p");
-                            writeln(`D is often praised for its unbounded power. But power needs availability.<br><br>`~
-
-                                    ` You may hear about every feature a language has to offer, for example after going through the reference book.<br><br>`~
-                                    `That does not mean you'll feel comfortable using these features, or figure out how they fit together.<br><br>`~
-
-                                    `When I discovered D in 2007, I thought its learning curve was gentle. I already knew a subset of it and the language was simpler back then. It all felt glorious and familiar.<br><br>`~
-
-                                    `The truth took years to unfold. I had skipped the learning phase because of this perceived familiarity. But D is a language of its own that needs dedicated learning like any other. I had to expand my "subset of confidence", feature by feature.<br><br>`~
-
-                                    `This unexpected difficulty is aggravated by the fact information is scattered in different places (wiki, language documentation, D specification, D forums...).`~
-                                    `Sometimes valuable information can be hard to come by. It doesn't help that some of the resources implicitely assume that your time has little value.</strong><br><br>`);
+                            writeln(`D is often praised for its unbounded power. Here is a place to store some interesting snippets about it.<br><br>`);
                         pop();
 
                         push("h2");
